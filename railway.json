@@ -1,0 +1,26 @@
+{
+  "$schema": "https://railway.app/schema.json",
+  "build": {
+    "builder": "NIXPACKS"
+  },
+  "deploy": {
+    "healthcheckPath": "/health",
+    "healthcheckTimeout": 300,
+    "restartPolicyType": "NEVER",
+    "restartPolicyMaxRetries": 10
+  },
+  "environments": {
+    "development": {
+      "variables": {
+        "PORT": "3001",
+        "NODE_ENV": "development"
+      }
+    },
+    "production": {
+      "variables": {
+        "PORT": "${PORT}",
+        "NODE_ENV": "production"
+      }
+    }
+  }
+}

@@ -151,6 +151,16 @@ app.get("/status/:jobId", (req, res) => {
   });
 });
 
+// Health check endpoint
+app.get("/health", (req, res) => {
+  res.json({
+    status: "OK",
+    timestamp: new Date().toISOString(),
+    uptime: process.uptime(),
+    version: "1.0.0",
+  });
+});
+
 // Download compressed file
 app.get("/download/:jobId", (req, res) => {
   const jobId = req.params.jobId;

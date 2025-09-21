@@ -45,10 +45,10 @@ A **fully functional** web application for compressing large video files (up to 
 
 ---
 
-## 🚀 Quick Start
+## 🚀 Quick Start - Local Development
 
 ### Prerequisites
-- **Node.js** 16+ and npm
+- **Node.js** 18+ and npm
 - **FFmpeg** installed on system
 - Modern web browser
 
@@ -88,6 +88,92 @@ npm run dev
 6. **Open your browser:**
 - Frontend: http://localhost:5174/
 - Backend API: http://localhost:3001/
+
+---
+
+## 🌐 Production Deployment
+
+### Option 1: Railway + Cloudflare Pages (Recommended)
+
+#### Backend Deployment (Railway):
+
+1. **Sign up for Railway:**
+   - Go to https://railway.app
+   - Create account and project
+
+2. **Connect your repository:**
+```bash
+# Make sure your code is pushed to GitHub first
+git remote -v  # Should show your GitHub repo
+```
+
+3. **Deploy on Railway:**
+   - Import your GitHub repository
+   - Railway detects `railway.json` configuration
+   - Automatic FFmpeg installation via Nixpacks
+   - Get your backend URL: `https://your-app.railway.app`
+
+4. **Environment Variables:**
+   - Go to Railway dashboard → Variables
+   - Add: `PORT=3001`
+
+#### Frontend Deployment (Cloudflare Pages):
+
+1. **Sign up for Cloudflare:**
+   - Go to https://pages.cloudflare.com
+
+2. **Connect Repository:**
+   - Select "Connect to Git"
+   - Choose your GitHub repository
+
+3. **Build Configuration:**
+   - **Build command:** `npm run build:frontend`
+   - **Build output directory:** `dist-frontend`
+   - **Root directory:** `/` (leave empty)
+
+4. **Environment Variables:**
+   - Add: `VITE_API_URL=https://your-app.railway.app`
+
+5. **Deploy:**
+   - Push changes to trigger deployment
+   - Get your frontend URL: `https://your-pages.pages.dev`
+
+### Option 2: Docker Deployment
+
+```bash
+# Build Docker image
+docker build -t video-compressor .
+
+# Run locally for testing
+docker run -p 3001:3001 -e PORT=3001 video-compressor
+
+# Deploy to any Docker host
+# AWS ECS, Google Cloud Run, DigitalOcean App Platform, etc.
+```
+
+### Option 3: Manual Server Deployment
+
+```bash
+# 1. Server setup (Ubuntu/Debian)
+sudo apt update
+sudo apt install ffmpeg nodejs npm
+
+# 2. Clone and setup
+git clone https://github.com/yaskovbs/Video-Compressor-MORE-THAN-9GB-Pro.git
+cd video-compressor-more-than-9gb-pro
+npm install
+npm run build:frontend
+
+# 3. Configure environment
+cp .env.example .env
+# Edit .env with production URLs
+
+# 4. Start with PM2
+npm install -g pm2
+pm2 start npm --name "video-compressor" -- run server
+pm2 startup
+pm2 save
+```
 
 ---
 

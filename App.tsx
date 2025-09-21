@@ -44,7 +44,8 @@ const App: React.FC = () => {
       formData.append('quality', settings.quality);
 
       // Upload and start compression
-      const compressResponse = await fetch('http://localhost:3001/compress', {
+      const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:3001';
+      const compressResponse = await fetch(`${apiUrl}/compress`, {
         method: 'POST',
         body: formData,
       });
@@ -58,7 +59,7 @@ const App: React.FC = () => {
       // Poll for status updates
       const pollStatus = async () => {
         try {
-          const statusResponse = await fetch(`http://localhost:3001/status/${jobId}`);
+          const statusResponse = await fetch(`${apiUrl}/status/${jobId}`);
           if (!statusResponse.ok) {
             throw new Error('Failed to get compression status');
           }
@@ -76,7 +77,7 @@ const App: React.FC = () => {
               originalSize: jobStatus.originalSize,
               compressedSize: jobStatus.compressedSize,
               fileName: jobStatus.originalFileName,
-              downloadUrl: `http://localhost:3001/download/${jobId}`,
+              downloadUrl: `${apiUrl}/download/${jobId}`,
             });
             setAppState(AppState.DONE);
           } else if (jobStatus.status === 'error') {
