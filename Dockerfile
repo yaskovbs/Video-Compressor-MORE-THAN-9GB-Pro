@@ -24,7 +24,7 @@ COPY package*.json ./
 RUN npm ci --only=production && npm cache clean --force
 
 # Copy built frontend to serve statically
-COPY --from=frontend-builder /app/dist-frontend ./frontend-dist
+COPY --from=frontend-builder /app/frontend/dist-frontend ./frontend-dist
 
 # Expose port
 EXPOSE 3001
