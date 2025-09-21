@@ -1,0 +1,5 @@
+{
+  "name": "Video Compressor MORE THAN 9GB Pro",
+  "description": "A web application that provides a realistic simulation of high-quality video compression for large files up to 10GB. Users can select a file, choose compression settings, and see the potential savings.",
+  "requestFramePermissions": []
+}
